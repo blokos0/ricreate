@@ -23,13 +23,15 @@ for i in range(rows // 24):
         ind = 0 # tile name index
         indcur = 0
         for d in dict:
-            # diffcur = sum(sum(sum(cv2.subtract(d, img_split[curimgspl]))))
+            # diffcur = sum(sum(sum(cv2.subtract(img_split[curimgspl], d))))
             diffcur = sum(sum(cv2.absdiff(cv2.mean(d), cv2.mean(img_split[curimgspl])))) # i have no idea what im doing
             if diffcur < diff:
                 ind = indcur
                 diff = diffcur
             print(f"s{curimgspl}, bd{diff}, bt{dictnames[ind]}, cd{diffcur}, ct{dictnames[indcur]}")
             indcur += 1
+            if diff == 0:
+                break
         print(f"{dictnames[ind]} for s{curimgspl}")
         tile = dictnames[ind][5 : len(dictnames[ind]) - 4]
         str += f"{tile}"
